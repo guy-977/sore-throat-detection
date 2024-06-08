@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-import argparse
+import argparse, os
 
 def get_prediction(img, model):
   class_names = [
@@ -14,6 +14,9 @@ def get_prediction(img, model):
   score = tf.nn.softmax(prediction)
 
   return [class_names[np.argmax(score)], 100 * np.max(score)]
+
+if not os.path.exists('models/model.h5'):
+    exit("The model does not exist!! Download or train the model first")
 
 model = tf.keras.models.load_model('models/model.h5')
 
